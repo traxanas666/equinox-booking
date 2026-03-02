@@ -2,39 +2,33 @@
 <html>
 <head>
   <title>Equinox Booking</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial;
-      background: #f3f4f6;
-      text-align: center;
-      padding: 40px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      max-width: 400px;
-      margin: auto;
-    }
-    button {
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: none;
-      background: black;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-  <div class="card">
-    <h1>Equinox Booking</h1>
-    <p>Custom Gym Booking System</p>
-    <button onclick="alert('Booking system coming next step')">
-      Enter
-    </button>
-  </div>
+<body style="font-family: Arial; text-align:center; padding:40px;">
+
+  <h1>Equinox Booking</h1>
+  <button onclick="testConnection()">Test Database Connection</button>
+
+  <p id="result"></p>
+
+  <script>
+    const supabaseUrl = "PASTE_YOUR_URL_HERE"
+    const supabaseKey = "PASTE_YOUR_ANON_KEY_HERE"
+
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey)
+
+    async function testConnection() {
+      const { data, error } = await supabase
+        .from('members')
+        .select('*')
+
+      if (error) {
+        document.getElementById("result").innerText = "❌ Error: " + error.message
+      } else {
+        document.getElementById("result").innerText = "✅ Connected to database!"
+      }
+    }
+  </script>
+
 </body>
 </html>
